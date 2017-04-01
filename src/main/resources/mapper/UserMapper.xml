@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UserMapper">
+    <resultMap id="userType" type="User">
+        <result property="userId" column="user_id" />
+        <result property="userName" column="user_name" />
+    </resultMap>
+
+    <sql id="columns">
+        user_id, user_name
+    </sql>
+
+    <select id="getUser" resultMap="userType">
+        SELECT <include refid="columns" /> from t_user
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        INSERT INTO t_user (<include refid="columns" />)
+        VALUES (#{userId}, #{userName})
+    </insert>
+
+    <update id="updateUser" parameterType="User">
+        update t_user set user_name = #{userName} where user_id = #{userId}
+    </update>
+
+    <delete id="deleteUser">
+        delete from t_user where user_id = #{userId}
+    </delete>
+</mapper>
